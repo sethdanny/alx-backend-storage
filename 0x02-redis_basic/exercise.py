@@ -25,15 +25,11 @@ class Cache:
             ) -> Union[str, bytes, int, float]:
         """ Retrieves a value from a Redis value storage """
         value = self._redis.get(key)
-        if value is None:
-            return None
-        if fn is not None:
-            return fn(value)
-        return value
+        return fn(value) if fin is not None else value
 
     def get_str(self, key: str) -> str:
         """ retrieves a string value from a redis value storage"""
-        return self.get(key, fn=lambda d: d.decode('utf-8'))
+        return self.get(key, lambda d: d.decode('utf-8'))
 
     def get_int(self, key: str) -> int:
         """ Retrieves an integer value from a Redis value storage"""
