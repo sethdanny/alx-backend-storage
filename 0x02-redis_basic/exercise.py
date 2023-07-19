@@ -37,4 +37,4 @@ class Cache:
 
     def get_int(self, key: str) -> int:
         """ Retrieves an integer value from a Redis value storage"""
-        return self.get(key, fn=int)
+        return self.get(key, lambda d: int(d))
